@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "344571558064",
+    "firebase_url": "https://vunh-flutter.firebaseio.com",
+    "project_id": "vunh-flutter",
+    "storage_bucket": "vunh-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344571558064:android:29fba8fe1922967c21a375",
+        "android_client_info": {
+          "package_name": "com.vunh.vunh_car"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344571558064-kmib5ffo07icavu2vgr3qh7h745lmve6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4iajiV1FZQcjvC1mt7Rw1gzc16VI3ZGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344571558064-kmib5ffo07icavu2vgr3qh7h745lmve6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
