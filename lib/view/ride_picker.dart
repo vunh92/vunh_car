@@ -6,11 +6,17 @@ import 'package:vunh_car/src/blocs/place_bloc.dart';
 import 'package:vunh_car/src/model/place_item_res.dart';
 
 class RidePicker extends StatefulWidget {
+  final Function(PlaceItemRes, bool) onSelected;
+  RidePicker(this.onSelected);
+
   @override
   RidePickerState createState() => RidePickerState();
 }
 
 class RidePickerState extends State<RidePicker> {
+  PlaceItemRes fromAddress;
+  PlaceItemRes toAddress;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +38,14 @@ class RidePickerState extends State<RidePicker> {
             child: FlatButton(
                 onPressed: (){
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => RidePickerPage(),)
+                    MaterialPageRoute(builder: (context) => RidePickerPage(fromAddress == null ? "" : fromAddress.name,
+                            (place, isFrom) {
+                          widget.onSelected(place, isFrom);
+                          fromAddress = place;
+                          setState(() {});
+                        },
+                        true)
+                    )
                   );
                 },
                 child: SizedBox(
@@ -56,7 +69,7 @@ class RidePickerState extends State<RidePicker> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(40, 0, 50, 0),
                         child: Text(
-                          "Trường Sa, HCM",
+                          fromAddress == null ? "From" : fromAddress.name,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontSize: 16, color: Colors.black),
                         ),
@@ -70,7 +83,18 @@ class RidePickerState extends State<RidePicker> {
             width: double.infinity,
             height: 50,
             child: FlatButton(
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => RidePickerPage(toAddress == null ? "" : toAddress.name,
+                            (place, isFrom) {
+                          widget.onSelected(place, isFrom);
+                          toAddress = place;
+                          setState(() {});
+                        },
+                        false)
+                    )
+                  );
+                },
                 child: SizedBox(
                   width: double.infinity,
                   height: double.infinity,
@@ -92,7 +116,7 @@ class RidePickerState extends State<RidePicker> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(40, 0, 50, 0),
                         child: Text(
-                          "Home",
+                          toAddress == null ? "To" : toAddress.name,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontSize: 16, color: Colors.black),
                         ),
@@ -109,6 +133,11 @@ class RidePickerState extends State<RidePicker> {
 }
 
 class RidePickerPage extends StatefulWidget {
+  final String selectedAddress;
+  final Function(PlaceItemRes, bool) onSelected;
+  final bool _isFromAddress;
+  RidePickerPage(this.selectedAddress, this.onSelected, this._isFromAddress);
+
   @override
   RidePickerPageState createState() => RidePickerPageState();
 }
@@ -203,6 +232,8 @@ class RidePickerPageState extends State<RidePickerPage> {
                             onTap: (){
                               print("ontap " + index.toString());
                               Navigator.of(context).pop();
+                              widget.onSelected(places.elementAt(index),
+                                  widget._isFromAddress);
                             },
                           );
                         },
